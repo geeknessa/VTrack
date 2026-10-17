@@ -34,28 +34,28 @@ export const Landing: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-bg flex flex-col items-center justify-center py-0 md:py-12 px-0 md:px-4">
-      <div className="w-full max-w-lg md:max-w-xl mx-auto flex flex-col min-h-[100dvh] md:min-h-0 p-6 md:p-10 md:bg-surface md:border md:border-border md:rounded-3xl relative">
+    <div className="min-h-[100dvh] bg-bg flex flex-col justify-between py-4 px-4 sm:px-6 md:py-10">
+      <div className="w-full max-w-md mx-auto my-auto flex flex-col p-6 sm:p-8 bg-surface border border-border/80 rounded-3xl shadow-sm relative">
         
         {/* Skip button for carousel */}
         {slide < slides.length - 1 && (
           <button 
             onClick={() => navigate('/onboarding')}
-            className="absolute top-6 right-6 text-xs font-bold text-text-muted hover:text-text-main btn-tap z-10"
+            className="absolute top-5 right-5 text-xs font-bold text-text-muted hover:text-text-main btn-tap z-10 px-2 py-1 rounded-lg"
           >
             Skip
           </button>
         )}
 
-        <div className="flex-1 flex flex-col items-center justify-center w-full text-center animate-in fade-in slide-in-from-right-4 duration-300 py-8" key={slide}>
+        <div className="flex flex-col items-center justify-center w-full text-center animate-in fade-in slide-in-from-right-4 duration-300 py-6" key={slide}>
           {slides[slide].icon}
-          <h1 className="text-3xl md:text-4xl font-heading font-black text-text-main mb-4">{slides[slide].title}</h1>
-          <p className="text-text-muted text-sm md:text-base leading-relaxed max-w-[340px] mx-auto">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black text-text-main mb-3">{slides[slide].title}</h1>
+          <p className="text-text-muted text-sm leading-relaxed max-w-[320px] mx-auto">
             {slides[slide].subtitle}
           </p>
         </div>
 
-        <div className="w-full space-y-6 pb-6 pt-4 mt-auto">
+        <div className="w-full space-y-5 pt-2">
           {/* Carousel Dots */}
           <div className="flex justify-center gap-2">
             {slides.map((_, idx) => (
@@ -68,22 +68,26 @@ export const Landing: React.FC = () => {
 
           <button 
             onClick={nextSlide}
-            className="w-full py-4 bg-accent text-white font-bold rounded-2xl btn-tap flex justify-center items-center gap-2 hover:bg-accent-hover transition-colors shadow-none"
+            className="w-full py-3.5 bg-accent text-white font-bold rounded-2xl btn-tap flex justify-center items-center gap-2 hover:bg-accent-hover transition-colors shadow-none"
           >
             {slide === slides.length - 1 ? 'Get Started' : 'Next'} 
             {slide === slides.length - 1 ? <ArrowRight className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
           </button>
 
-          <div className="text-center space-y-2">
+          <div className="text-center">
             <button 
               onClick={() => navigate('/login')}
-              className="text-xs font-bold text-text-muted hover:text-text-main btn-tap"
+              className="text-xs font-bold text-text-muted hover:text-text-main btn-tap py-1"
             >
               Already have an account? Log in
             </button>
-            <AppFooter className="pt-1" />
           </div>
         </div>
+      </div>
+
+      {/* Clean Bottom Footer with Safe Area */}
+      <div className="w-full max-w-md mx-auto pt-2 pb-safe">
+        <AppFooter className="py-2" />
       </div>
     </div>
   );

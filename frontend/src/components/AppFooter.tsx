@@ -38,23 +38,23 @@ export const AppFooter: React.FC<AppFooterProps> = ({ className = '', variant = 
   }
 
   return (
-    <footer className={`w-full py-4 text-center text-xs text-text-muted select-none ${className}`}>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11.5px]">
-        <span>© {currentYear} VTrack • Built for Students</span>
+    <footer className={`w-full py-3 text-center text-text-muted select-none ${className}`}>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4 text-[11px]">
+        <span className="opacity-75">© {currentYear} VTrack • Built for Students</span>
         <span className="hidden sm:inline text-border">•</span>
         <div className="flex items-center gap-3 font-semibold">
           <button
             type="button"
             onClick={() => navigate('/privacy')}
-            className="text-text-muted hover:text-text-main hover:underline transition-colors btn-tap"
+            className="text-text-muted hover:text-text-main hover:underline transition-colors btn-tap text-[11px]"
           >
             Privacy Policy
           </button>
-          <span className="text-border">•</span>
+          <span className="text-border text-xs">•</span>
           <button
             type="button"
             onClick={() => navigate('/terms')}
-            className="text-text-muted hover:text-text-main hover:underline transition-colors btn-tap"
+            className="text-text-muted hover:text-text-main hover:underline transition-colors btn-tap text-[11px]"
           >
             Terms of Service
           </button>

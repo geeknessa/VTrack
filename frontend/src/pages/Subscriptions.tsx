@@ -54,7 +54,11 @@ function getServiceIcon(iconKey?: string, name?: string) {
   return <CreditCard className="w-5 h-5 text-accent" />;
 }
 
-export const Subscriptions: React.FC = () => {
+interface SubscriptionsProps {
+  isEmbedded?: boolean;
+}
+
+export const Subscriptions: React.FC<SubscriptionsProps> = ({ isEmbedded = false }) => {
   const queryClient = useQueryClient();
   const { settings } = useAuth();
   const currency = settings?.home_currency || 'NGN';
@@ -231,8 +235,8 @@ export const Subscriptions: React.FC = () => {
   });
 
   return (
-    <div className="w-full min-h-screen bg-bg text-text-main pb-24 md:pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 md:pt-8 space-y-6">
+    <div className={isEmbedded ? 'w-full text-text-main' : 'w-full min-h-screen bg-bg text-text-main pb-24 md:pb-12'}>
+      <div className={isEmbedded ? 'w-full space-y-6' : 'max-w-6xl mx-auto px-4 sm:px-6 pt-6 md:pt-8 space-y-6'}>
 
         {/* ── Top Header ── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

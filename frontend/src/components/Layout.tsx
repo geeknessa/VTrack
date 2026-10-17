@@ -171,55 +171,72 @@ export const Layout: React.FC = () => {
       </aside>
 
       {/* Mobile Bottom Tab Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border px-1 py-1 flex items-center justify-between z-40 max-w-lg mx-auto">
-        {/* Left 3 items */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border px-2 py-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] flex items-center justify-between z-40 max-w-lg mx-auto shadow-lg">
+        {/* Left 2 items: Home & Food */}
         <div className="flex items-center justify-around flex-1 min-w-0">
-          {navItems.slice(0, 3).map(item => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => 
-                `flex flex-col items-center justify-center flex-1 min-w-0 px-0.5 py-1 rounded-xl transition-colors ${
-                  isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
-                }`
-              }
-            >
-              <item.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
-              <span className="text-[8.5px] sm:text-[10px] mt-0.5 truncate max-w-[58px] text-center leading-tight">
-                {item.label}
-              </span>
-            </NavLink>
-          ))}
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => 
+              `flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors ${
+                isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
+              }`
+            }
+          >
+            <Home className="w-5 h-5" strokeWidth={2.5} />
+            <span className="text-[10px] mt-0.5 text-center leading-tight">Home</span>
+          </NavLink>
+
+          <NavLink
+            to="/menus"
+            className={({ isActive }) => 
+              `flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors ${
+                isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
+              }`
+            }
+          >
+            <Utensils className="w-5 h-5" strokeWidth={2.5} />
+            <span className="text-[10px] mt-0.5 text-center leading-tight">Food</span>
+          </NavLink>
         </div>
 
         {/* Center Floating Action Button */}
-        <div className="relative -top-3 px-1 flex-shrink-0">
+        <div className="relative -top-4 px-2 flex-shrink-0">
           <button
             onClick={() => navigate('/add')}
-            className="w-11 h-11 p-2 bg-accent text-white rounded-full flex items-center justify-center border-4 border-bg btn-tap hover:bg-accent-hover transition-colors shadow-sm"
+            className="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center border-4 border-bg btn-tap hover:bg-accent-hover transition-transform hover:scale-105 active:scale-95 shadow-md"
+            title="Log new transaction"
+            aria-label="Add transaction"
           >
-            <Plus className="w-5 h-5" strokeWidth={3} />
+            <Plus className="w-6 h-6" strokeWidth={3} />
           </button>
         </div>
 
-        {/* Right 3 items */}
+        {/* Right 2 items: Activity & Insights */}
         <div className="flex items-center justify-around flex-1 min-w-0">
-          {navItems.slice(3).map(item => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => 
-                `flex flex-col items-center justify-center flex-1 min-w-0 px-0.5 py-1 rounded-xl transition-colors ${
-                  isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
-                }`
-              }
-            >
-              <item.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
-              <span className="text-[8.5px] sm:text-[10px] mt-0.5 truncate max-w-[58px] text-center leading-tight">
-                {item.label}
-              </span>
-            </NavLink>
-          ))}
+          <NavLink
+            to="/activity"
+            className={({ isActive }) => 
+              `flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors ${
+                isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
+              }`
+            }
+          >
+            <List className="w-5 h-5" strokeWidth={2.5} />
+            <span className="text-[10px] mt-0.5 text-center leading-tight">Activity</span>
+          </NavLink>
+
+          <NavLink
+            to="/insights"
+            className={({ isActive }) => 
+              `flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors ${
+                isActive ? 'text-accent font-bold' : 'text-text-muted hover:text-text-main font-semibold'
+              }`
+            }
+          >
+            <PieChart className="w-5 h-5" strokeWidth={2.5} />
+            <span className="text-[10px] mt-0.5 text-center leading-tight">Insights</span>
+          </NavLink>
         </div>
       </nav>
     </div>

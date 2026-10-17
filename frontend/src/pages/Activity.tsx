@@ -6,15 +6,19 @@ import { strings } from '../i18n/strings';
 import { CoinBuddy } from '../components/CoinBuddy';
 import { usePeriod } from '../context/PeriodContext';
 import { ActivityPeriodFilter, SelectedPeriod, DurationType } from '../components/ActivityPeriodFilter';
-import { Calendar, Receipt, Download } from 'lucide-react';
+import { Calendar, Receipt, Download, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EditTransactionSheet } from '../components/EditTransactionSheet';
 import { StatementReceiptScannerModal } from '../components/StatementReceiptScannerModal';
 import { exportFinancialStatementPdf } from '../utils/pdfExport';
 
+const Subscriptions = React.lazy(() => import('./Subscriptions').then(m => ({ default: m.Subscriptions })));
+
 export const Activity: React.FC = () => {
   const { user, settings } = useAuth();
   const { period: globalPeriod, mode: globalMode } = usePeriod();
+
+  const [activityView, setActivityView] = useState<'transactions' | 'subscriptions'>('transactions');
 
   const getInitialDuration = (): DurationType => {
     if (globalMode === 'weekly') return 'weekly';
@@ -142,13 +146,50 @@ export const Activity: React.FC = () => {
           </div>
         </div>
 
-        {/* ── Interactive Duration Dropdown & Quick Pills ── */}
-        <ActivityPeriodFilter
-          value={selectedPeriod}
-          onChange={setSelectedPeriod}
-          duration={duration}
-          onDurationChange={setDuration}
-        />
+        {/* ── Segmented View Switcher: Transactions vs Recurring Bills ── */}
+        <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-2xl w-fit">
+          <button
+            type="button"
+            onClick={() => setActivityView('transactions')}
+            className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all btn-tap ${
+              activityView === 'transactions'
+                ? 'bg-accent text-white shadow-sm'
+                : 'text-text-muted hover:text-text-main'
+            }`}
+          >
+            Transactions
+          </button>
+          <button
+            type="button"
+            onClick={() => setActivityView('subscriptions')}
+            className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all btn-tap flex items-center gap-2 ${
+              activityView === 'subscriptions'
+                ? 'bg-accent text-white shadow-sm'
+                : 'text-text-muted hover:text-text-main'
+            }`}
+          >
+            <CreditCard className="w-4 h-4" />
+            <span>Recurring Bills</span>
+          </button>
+        </div>
+
+        {activityView === 'subscriptions' ? (
+          <React.Suspense fallback={
+            <div className="w-full py-12 flex justify-center items-center">
+              <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+            </div>
+          }>
+            <Subscriptions isEmbedded={true} />
+          </React.Suspense>
+        ) : (
+          <>
+            {/* ── Interactive Duration Dropdown & Quick Pills ── */}
+            <ActivityPeriodFilter
+              value={selectedPeriod}
+              onChange={setSelectedPeriod}
+              duration={duration}
+              onDurationChange={setDuration}
+            />
 
         {/* ── Responsive 2-column on desktop ── */}
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr] gap-6 items-start">
@@ -278,6 +319,8 @@ export const Activity: React.FC = () => {
           </div>
 
         </div>
+          </>
+        )}
       </div>
 
       {selectedTx && (
