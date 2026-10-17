@@ -2,35 +2,75 @@
 -- Complete unified seed for all Nile University campus food spots and official menus
 
 -- Ensure Food Court category exists
-INSERT INTO categories (id, user_id, name, icon_key, color_token, is_system) SELECT 13, NULL, 'Food Court', 'utensils', 'accent', true WHERE NOT EXISTS (SELECT 1 FROM categories WHERE id = 13);
+INSERT INTO categories (user_id, name, icon_key, kind, is_default)
+SELECT NULL, 'Food Court', 'utensils', 'needs', true
+WHERE NOT EXISTS (SELECT 1 FROM categories WHERE name = 'Food Court');
 
 -- 1. Seed all campus vendors with user_id = NULL (global for all students)
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 7, NULL, 'Zulkys Cafe', 'Campus Food Court', 13, 'coffee' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 7);
-UPDATE food_vendors SET user_id = NULL, name = 'Zulkys Cafe', location = 'Campus Food Court' WHERE id = 7;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 10, NULL, 'Street Food', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 10);
-UPDATE food_vendors SET user_id = NULL, name = 'Street Food', location = 'Campus Food Court' WHERE id = 10;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 11, NULL, 'Quintavi Restaurant', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 11);
-UPDATE food_vendors SET user_id = NULL, name = 'Quintavi Restaurant', location = 'Campus Food Court' WHERE id = 11;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 12, NULL, 'W Sauce', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 12);
-UPDATE food_vendors SET user_id = NULL, name = 'W Sauce', location = 'Campus Food Court' WHERE id = 12;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 13, NULL, 'Yammy', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 13);
-UPDATE food_vendors SET user_id = NULL, name = 'Yammy', location = 'Campus Food Court' WHERE id = 13;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 14, NULL, 'Pizza 360 Pro Max', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 14);
-UPDATE food_vendors SET user_id = NULL, name = 'Pizza 360 Pro Max', location = 'Campus Food Court' WHERE id = 14;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 15, NULL, 'Papa Rimz Nile', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 15);
-UPDATE food_vendors SET user_id = NULL, name = 'Papa Rimz Nile', location = 'Campus Food Court' WHERE id = 15;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 16, NULL, 'JAJ Plate & Perks', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 16);
-UPDATE food_vendors SET user_id = NULL, name = 'JAJ Plate & Perks', location = 'Campus Food Court' WHERE id = 16;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 17, NULL, 'Dot (Grill & Griddle)', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 17);
-UPDATE food_vendors SET user_id = NULL, name = 'Dot (Grill & Griddle)', location = 'Campus Food Court' WHERE id = 17;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 18, NULL, 'Cherry African Kitchen', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 18);
-UPDATE food_vendors SET user_id = NULL, name = 'Cherry African Kitchen', location = 'Campus Food Court' WHERE id = 18;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 19, NULL, 'B''s Chops ''n'' Grills', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 19);
-UPDATE food_vendors SET user_id = NULL, name = 'B''s Chops ''n'' Grills', location = 'Campus Food Court' WHERE id = 19;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 20, NULL, '11:29 Eleven Twenty-Nine', 'Campus Food Court', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 20);
-UPDATE food_vendors SET user_id = NULL, name = '11:29 Eleven Twenty-Nine', location = 'Campus Food Court' WHERE id = 20;
-INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key) SELECT 30, NULL, 'Quick fix', 'Opposite hostel', 13, 'utensils' WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 30);
-UPDATE food_vendors SET user_id = NULL, name = 'Quick fix', location = 'Opposite hostel' WHERE id = 30;
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 7, NULL, 'Zulkys Cafe', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'coffee'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 7);
+UPDATE food_vendors SET user_id = NULL, name = 'Zulkys Cafe', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 7;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 10, NULL, 'Street Food', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 10);
+UPDATE food_vendors SET user_id = NULL, name = 'Street Food', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 10;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 11, NULL, 'Quintavi Restaurant', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 11);
+UPDATE food_vendors SET user_id = NULL, name = 'Quintavi Restaurant', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 11;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 12, NULL, 'W Sauce', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 12);
+UPDATE food_vendors SET user_id = NULL, name = 'W Sauce', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 12;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 13, NULL, 'Yammy', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 13);
+UPDATE food_vendors SET user_id = NULL, name = 'Yammy', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 13;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 14, NULL, 'Pizza 360 Pro Max', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 14);
+UPDATE food_vendors SET user_id = NULL, name = 'Pizza 360 Pro Max', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 14;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 15, NULL, 'Papa Rimz Nile', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 15);
+UPDATE food_vendors SET user_id = NULL, name = 'Papa Rimz Nile', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 15;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 16, NULL, 'JAJ Plate & Perks', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 16);
+UPDATE food_vendors SET user_id = NULL, name = 'JAJ Plate & Perks', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 16;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 17, NULL, 'Dot (Grill & Griddle)', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 17);
+UPDATE food_vendors SET user_id = NULL, name = 'Dot (Grill & Griddle)', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 17;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 18, NULL, 'Cherry African Kitchen', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 18);
+UPDATE food_vendors SET user_id = NULL, name = 'Cherry African Kitchen', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 18;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 19, NULL, 'B''s Chops ''n'' Grills', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 19);
+UPDATE food_vendors SET user_id = NULL, name = 'B''s Chops ''n'' Grills', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 19;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 20, NULL, '11:29 Eleven Twenty-Nine', 'Campus Food Court', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 20);
+UPDATE food_vendors SET user_id = NULL, name = '11:29 Eleven Twenty-Nine', location = 'Campus Food Court', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 20;
+
+INSERT INTO food_vendors (id, user_id, name, location, category_id, icon_key)
+SELECT 30, NULL, 'Quick fix', 'Opposite hostel', (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1), 'utensils'
+WHERE NOT EXISTS (SELECT 1 FROM food_vendors WHERE id = 30);
+UPDATE food_vendors SET user_id = NULL, name = 'Quick fix', location = 'Opposite hostel', category_id = (SELECT id FROM categories WHERE name = 'Food Court' LIMIT 1) WHERE id = 30;
 
 -- Update sequence for food_vendors
 SELECT setval('food_vendors_id_seq', (SELECT COALESCE(MAX(id), 1) FROM food_vendors));
