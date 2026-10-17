@@ -1058,7 +1058,7 @@ export const FoodMenus: React.FC = () => {
             {item.is_provisions ? (
               <div className="flex items-center gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
                 <span className="font-heading font-black font-tabular text-xs text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
-                  ₦0 Stash
+                  ₦0
                 </span>
                 <div className="flex items-center gap-1 bg-surface border border-border rounded-lg px-1.5 py-0.5 text-xs">
                   <button
@@ -1142,9 +1142,15 @@ export const FoodMenus: React.FC = () => {
                 title="Click pencil to edit number right here"
               >
                 <span>
-                  {item.is_provisions || item.price === 0
-                    ? '₦0 (Tap to set)'
-                    : formatMoney(item.price, currency)}
+                  {item.is_provisions ? (
+                    '₦0'
+                  ) : !item.price || item.price === 0 ? (
+                    <span className="text-text-muted/70 font-normal italic text-xs">
+                      No price yet
+                    </span>
+                  ) : (
+                    formatMoney(item.price, currency)
+                  )}
                 </span>
                 <Edit2 className="w-2.5 h-2.5 opacity-60 group-hover/price:opacity-100" />
               </button>
@@ -1904,7 +1910,9 @@ export const FoodMenus: React.FC = () => {
                             <span className="font-heading font-black text-text-main">
                               {v.min_price > 0
                                 ? `${formatMoney(v.min_price, currency)} – ${formatMoney(v.max_price, currency)}`
-                                : '₦0 (Hostel Stash)'}
+                                : v.max_price > 0
+                                ? `${formatMoney(0, currency)} – ${formatMoney(v.max_price, currency)}`
+                                : <span className="text-text-muted/70 font-normal italic">No prices yet</span>}
                             </span>
                           </div>
                         </div>
@@ -2811,7 +2819,7 @@ export const FoodMenus: React.FC = () => {
                                   }`}
                                 title={`Total planned spend for ${day.dayName}: ${formatMoney(dayTotal, currency)}`}
                               >
-                                {dayTotal > 0 ? formatMoney(dayTotal, currency) : '₦0 Stash'}
+                                {dayTotal > 0 ? formatMoney(dayTotal, currency) : '₦0'}
                               </span>
                             </div>
                           )}
@@ -3092,7 +3100,7 @@ export const FoodMenus: React.FC = () => {
                     <div key={dish.id} className="text-xs text-text-muted flex items-center justify-between py-0.5">
                       <span className="truncate font-bold text-text-main">• {dish.name}</span>
                       <span className="shrink-0 ml-2 font-mono text-accent">
-                        {dish.is_provisions ? '₦0 Stash' : formatMoney(dish.price, currency)}
+                        {dish.is_provisions ? '₦0' : dish.price > 0 ? formatMoney(dish.price, currency) : 'No price yet'}
                       </span>
                     </div>
                   ))}
@@ -3910,7 +3918,7 @@ export const FoodMenus: React.FC = () => {
                                     : 'bg-accent/10 text-accent font-bold'
                                     }`}
                                 >
-                                  {isProvisions ? '₦0 Provisions' : formatMoney(price, currency)}
+                                  {isProvisions ? '₦0' : formatMoney(price, currency)}
                                 </span>
                               </div>
 
@@ -3963,7 +3971,7 @@ export const FoodMenus: React.FC = () => {
                           }}
                           className="px-3.5 py-1.5 rounded-lg bg-green text-white text-xs font-bold hover:bg-green/90 transition-colors btn-tap"
                         >
-                          Select ₦0 Stash
+                          Select ₦0 Meal
                         </button>
                       </div>
                     </div>
@@ -4004,7 +4012,7 @@ export const FoodMenus: React.FC = () => {
                                 <span>{item.vendor_name}</span>
                                 <span>•</span>
                                 <span className="font-tabular font-bold text-accent">
-                                  {item.is_provisions ? '₦0 Provisions' : formatMoney(item.price, currency)}
+                                  {item.is_provisions ? '₦0' : item.price > 0 ? formatMoney(item.price, currency) : 'No price yet'}
                                 </span>
                               </p>
                             </div>
