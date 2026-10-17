@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="44" fill="#FFC107" stroke="#2A1E24" stroke-width="4"/>
+  <circle cx="50" cy="50" r="36" fill="#FFCA28" stroke="#F57F17" stroke-width="2" stroke-dasharray="4 2"/>
+  <text x="50" y="26" text-anchor="middle" font-size="12" font-weight="800" fill="#B78103">₦</text>
+  <circle cx="36" cy="42" r="3.5" fill="#2A1E24"/>
+  <circle cx="64" cy="42" r="3.5" fill="#2A1E24"/>
+  <circle cx="28" cy="48" r="4.5" fill="#F497B6" opacity="0.8"/>
+  <circle cx="72" cy="48" r="4.5" fill="#F497B6" opacity="0.8"/>
+  <path d="M 40 52 Q 50 60 60 52" fill="none" stroke="#2A1E24" stroke-width="3" stroke-linecap="round"/>
+</svg>

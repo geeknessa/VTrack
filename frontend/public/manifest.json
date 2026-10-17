@@ -1,0 +1,16 @@
+{
+  "short_name": "VTrack",
+  "name": "VTrack - Allowance & Expense Tracker",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FFF5F7",
+  "theme_color": "#E60067",
+  "display": "standalone",
+  "orientation": "portrait"
+}

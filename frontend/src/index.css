@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Color Palette derived from reference pink */
+  --color-bg: #FFF5F8;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FFF0F5;
+  --color-border: #F7D6E3;
+  --color-border-dark: #EABFD0;
+  
+  --color-accent: #F24E8E; /* Matched to uploaded reference image */
+  --color-accent-hover: #D73C78;
+  --color-accent-soft: #FDEBF2;
+  
+  --color-text-main: #2A1A22;
+  --color-text-muted: #735C66;
+
+  /* Strict Semantic Colors */
+  --color-red: #D32F2F;        /* RESERVED FOR ERRORS & OVERBUDGET ONLY */
+  --color-red-soft: #FDE8E8;
+  --color-green: #2E7D32;      /* RESERVED FOR INCOME & SAVINGS ONLY */
+  --color-green-soft: #E8F5E9;
+
+  /* Typography */
+  --font-heading: 'Fredoka', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
+
+.dark {
+  --color-bg: #1A1216;
+  --color-surface: #241A20;
+  --color-surface-hover: #2D2128;
+  --color-border: #3D2C36;
+  --color-border-dark: #543B4B;
+
+  --color-accent: #FF2A85;
+  --color-accent-hover: #E60067;
+  --color-accent-soft: #3D1426;
+
+  --color-text-main: #FCEFF3;
+  --color-text-muted: #BFA8B4;
+
+  --color-red: #FF5252;
+  --color-red-soft: #3B1B1B;
+  --color-green: #4CAF50;
+  --color-green-soft: #1B331E;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tabular figures for numbers */
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+}
+
+/* ANTI-SLOP ENFORCEMENT: No Drop Shadows, rely strictly on borders and fills */
+*, *::before, *::after {
+  box-shadow: none !important;
+}
+
+/* Fixed spacing scale helpers */
+.card-base {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+/* Micro-animations with prefers-reduced-motion check */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-tap {
+    transition: transform 0.1s ease, background-color 0.15s ease;
+  }
+  .btn-tap:active {
+    transform: scale(0.96);
+  }
+}
+
+/* Remove default ugly browser up/down arrow spinners on number inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Remove default browser password reveal/clear button (Edge / IE) */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none !important;
+}
